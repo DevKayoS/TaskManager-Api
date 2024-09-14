@@ -8,7 +8,7 @@ public class ResponseTaskJson
     public string Name { get; set; } = String.Empty;
     public string Description { get; set; } = String.Empty;
     public Priority Priority { get; set; }
-    public DateOnly LimitDate { get; set; }
+    public DateTime LimitDate { get; set; }
     public Status Status { get; set; }
     
 }

@@ -5,5 +5,5 @@ namespace TaskManager.Application.UseCases.InMemory.Task;
 
 public class InMemoryTask
 {
-    public List<ResponseTaskJson> Tasks = [];
+    public static List<ResponseTaskJson> Tasks { get; set; }  = [];
 }
