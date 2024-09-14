@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TaskManager.Application.UseCases.Tasks.Create;
 using TaskManager.Application.UseCases.Tasks.GetAll;
 using TaskManager.Application.UseCases.Tasks.GetUniqueById;
+using TaskManager.Application.UseCases.Tasks.Update;
 using TaskManager.Communication.Request;
 using TaskManager.Communication.Response;
 
@@ -46,6 +47,18 @@ namespace TaskManager.Api.Controllers
                 return NotFound();
             }
             return Ok(response);
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+        public IActionResult Update([FromRoute] int id, [FromBody] RequestShortTaskJson request)
+        {
+            var useCase = new UpdateTaskUseCase();
+            useCase.Execute(id, request);
+            
+            return NoContent();
         }
     }
 }
