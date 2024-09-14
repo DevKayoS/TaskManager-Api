@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Application.UseCases.Tasks.Create;
 using TaskManager.Application.UseCases.Tasks.GetAll;
+using TaskManager.Application.UseCases.Tasks.GetUniqueById;
 using TaskManager.Communication.Request;
 using TaskManager.Communication.Response;
 
@@ -28,6 +29,22 @@ namespace TaskManager.Api.Controllers
             var useCase = new GetAllTasksUseCase();
             var response = useCase.Execute();
             
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        [ProducesResponseType(typeof(ResponseTaskJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseErrorJson),StatusCodes.Status404NotFound)]
+        public IActionResult GetUniqueById([FromRoute] int id)
+        {
+            var useCase = new GetUniqueByIdUseCase();
+            var response = useCase.Execute(id);
+
+            if (response == null)
+            {
+                return NotFound();
+            }
             return Ok(response);
         }
     }
