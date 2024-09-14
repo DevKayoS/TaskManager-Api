@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaskManager.Application.UseCases.Tasks.Create;
+using TaskManager.Application.UseCases.Tasks.Delete;
 using TaskManager.Application.UseCases.Tasks.GetAll;
 using TaskManager.Application.UseCases.Tasks.GetUniqueById;
 using TaskManager.Application.UseCases.Tasks.Update;
+using TaskManager.Communication.Enum;
 using TaskManager.Communication.Request;
 using TaskManager.Communication.Response;
 
@@ -57,6 +59,17 @@ namespace TaskManager.Api.Controllers
         {
             var useCase = new UpdateTaskUseCase();
             useCase.Execute(id, request);
+            
+            return NoContent();
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public IActionResult Delete([FromRoute] int id)
+        {
+            var useCase = new DeleteTaskUseCase();
+            useCase.Execute(id);
             
             return NoContent();
         }
